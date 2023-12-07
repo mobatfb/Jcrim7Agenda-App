@@ -8,7 +8,7 @@ var fs = require('fs'); //libreria file sistem de node
 var path = require('path'); //permite trabajar con rutas de sistemas de ficheros
 const { bus } = require('nodemon/lib/utils');
 var allowApp = { name: 'sz7crimadm', password: "@jcrim2022" };
-var allowAppU = { name: 'sz7crimUser', password: "qwAS123" };
+var allowAppU = { name: 'sz7crimUser', password: "qwAS123"  };
 var allowAppX = { name: 'sz7crimSuperAdm', password: "aassleodffiIAs9" };
 //CREAT DATA DEL SETTING
 function save(req, res) {
