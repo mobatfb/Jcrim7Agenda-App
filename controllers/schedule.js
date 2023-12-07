@@ -8,7 +8,7 @@ var fs = require('fs'); //libreria file sistem de node
 var path = require('path'); //permite trabajar con rutas de sistemas de ficheros
 const { bus } = require('nodemon/lib/utils');
 var allowApp = { name: 'sz7crimadm', password: "@jcrim2022" };
-var allowAppU = { name: 'sz7crimUser', password: "qwAS123"  };
+var allowAppU = { name: 'sz7crimUser', password: "qwAS123" };
 var allowAppX = { name: 'sz7crimSuperAdm', password: "aassleodffiIAs9" };
 //CREAT DATA DEL SETTING
 function save(req, res) {
@@ -20,7 +20,7 @@ function save(req, res) {
         _validData()
     }
     function _validData() {
-        if (!(data.userId &&data.dateUsed && data.fiscalie && data.fiscal && data.nroOfice && data.etap && data.section && data.num && data.delit && data.evidence && data.info)) {
+        if (!(data.userId && data.dateUsed && data.fiscalie && data.fiscal && data.nroOfice && data.etap && data.num && data.delit && data.evidence && data.info)) {
             return res.status(200).send({ status: "empty" });
         } else {
             if (validData(data)) {
@@ -65,9 +65,9 @@ function save(req, res) {
 }
 //CONSEGUIR DATA DEL SERVICIO
 function read(req, res) {
-    var scheduleMaster = {month:req.params.month, year:req.params.year} 
+    var scheduleMaster = { month: req.params.month, year: req.params.year }
     console.log(scheduleMaster)
-    Schedule.find({ "yearUsed": scheduleMaster.year, "monthUsed": scheduleMaster.month  }, (err, schedule) => {
+    Schedule.find({ "yearUsed": scheduleMaster.year, "monthUsed": scheduleMaster.month }, (err, schedule) => {
         if (err) {
             return res.status(200).send({ status: "error", message: 'Error, vuelva a intentar', schedule: { fail: true } });
         }
@@ -156,7 +156,7 @@ function deletea(req, res) {
     function _validData() {
         if (!id) {
             return res.status(200).send({ status: "empty" });
-        } 
+        }
         _delete(id)
     }
     function _delete(auxId) {
@@ -198,11 +198,10 @@ function genDate() {
     return date + " " + hour
 }
 function validData(aux) {
-    if (aux.dateUsed.length<2 && aux.fiscalie.length<2 && aux.fiscal.length<2 &&
-        aux.nroOfice.length<2 && aux.etap.length<2 &&
-        aux.section.length<2 && aux.num.length<2 &&
-        aux.delit.length<2 && aux.evidence.length<2 &&
-        aux.info.length<2
+    if (aux.dateUsed.length < 2 && aux.fiscalie.length < 2 && aux.fiscal.length < 2 &&
+        aux.nroOfice.length < 2 && aux.etap.length < 2 &&
+        aux.num.length < 2 && aux.delit.length < 2 &&
+        aux.evidence.length < 2 && aux.info.length < 2
     ) {
         return true
     }
