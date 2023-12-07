@@ -10,6 +10,7 @@ var Schema = mongoose.Schema;
 
 //esquema para empresa 
 const scheduleSchema = new Schema({
+  userId: String,
   dateUsed: String,
   yearUsed: String,
   monthUsed: String,

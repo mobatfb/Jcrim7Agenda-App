@@ -1,7 +1,7 @@
 {
   "name": "Jcrim7Apps",
   "version": "1.0.0",
-  "description": "Jcrim7Utilitarios backend",
+  "description": "JcrimAgenda backend",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",

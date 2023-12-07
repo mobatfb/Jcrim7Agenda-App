@@ -20,7 +20,7 @@ function save(req, res) {
         _validData()
     }
     function _validData() {
-        if (!(data.dateUsed && data.fiscalie && data.fiscal && data.nroOfice && data.etap && data.section && data.num && data.delit && data.evidence && data.info)) {
+        if (!(data.userId &&data.dateUsed && data.fiscalie && data.fiscal && data.nroOfice && data.etap && data.section && data.num && data.delit && data.evidence && data.info)) {
             return res.status(200).send({ status: "empty" });
         } else {
             if (validData(data)) {
@@ -31,6 +31,7 @@ function save(req, res) {
     }
     function _setObjetc() {
         var schedule = new Schedule();
+        schedule.userId = data.userId
         schedule.dateUsed = data.dateUsed
         schedule.yearUsed = data.yearUsed
         schedule.monthUsed = data.monthUsed
@@ -145,64 +146,32 @@ function update(req, res) {
 }
 //eliminar de datos de usuario
 function deletea(req, res) {
-    var settingMaster = req.params.master
-    var data = req.body.req;
+    var id = req.params.id
     var userAccess = req.body.appAccess;
-    if (validApps(userAccess, allowApp) == false) {
+    if (validApps(userAccess, allowAppU) == false) {
         return res.status(200).send({ status: "password" });
     } else {
         _validData()
     }
     function _validData() {
-        if (!(data.numDescargo && data.numPericia && data.numAdmin && data.numMemo && data.numTelegram && data.numInform && data.numOrdService && data.numEvaluation && data.numResolution)) {
+        if (!id) {
             return res.status(200).send({ status: "empty" });
-        } else {
-            if (!validNumber(data)) {
-                return res.status(200).send({ status: "number" });
-            }
-            _setObjetc()
-        }
+        } 
+        _delete(id)
     }
-    function _setObjetc() {
-        var setting = new Setting();
-        setting.numDescargo = data.numDescargo
-        setting.numPericia = data.numPericia
-        setting.numAdmin = data.numAdmin
-        setting.numMemo = data.numMemo
-        setting.numTelegram = data.numTelegram
-        setting.numInform = data.numInform
-        setting.numOrdService = data.numOrdService
-        setting.numEvaluation = data.numEvaluation
-        setting.numResolution = data.numResolution
-        setting.dateUpdate = genDate()
-        _update(setting)
-    }
-    function _update(setting) {
-        console.log("puto", settingMaster)
-
-        Setting.findOneAndUpdate({ master: settingMaster }, {
-            numDescargo: setting.numDescargo,
-            numPericia: setting.numPericia,
-            numAdmin: setting.numAdmin,
-            numMemo: setting.numMemo,
-            numTelegram: setting.numTelegram,
-            numInform: setting.numInform,
-            numOrdService: setting.numOrdService,
-            numEvaluation: setting.numEvaluation,
-            numResolution: setting.numResolution,
-            dateUpdate: setting.dateUpdate
-        },
-            (err, settingUpdate) => {
+    function _delete(auxId) {
+        Schedule.deleteOne({ _id: auxId },
+            (err, deleted) => {
                 if (err) {
-                    return res.status(200).send({ status: 'error', message: 'Error en la petición de actualizar servicio' });
+                    return res.status(200).send({ status: 'error', message: 'Error en la petición de eliminar' });
                 }
-                if (settingUpdate) {
+                if (deleted) {
                     return res.status(200).send({
-                        status: 'updated',
-                        setting: settingUpdate,
+                        status: 'deleted',
                     });
                 } else {
-                    return res.status(200).send({ status: 'error', message: 'No se ha podido actualizar el servicio' });
+                    console.log("BORRADO")
+                    return res.status(200).send({ status: 'error', message: 'No se ha podido eliminar la cita' });
                 }
 
             });
